@@ -1,10 +1,10 @@
 package com.qinxue.myapp.net.clients.gank;
 
-import com.qinxue.myapp.net.clients.gank.factorys.GsonConverterFactory;
 import com.qinxue.myapp.net.clients.gank.factorys.LiveDataCallAdapterFactory;
 import com.qinxue.myapp.net.clients.gank.services.GankService;
 
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpClient {
     private static volatile HttpClient instance;

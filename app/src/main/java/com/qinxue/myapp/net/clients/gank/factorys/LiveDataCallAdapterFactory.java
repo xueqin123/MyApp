@@ -19,7 +19,6 @@ package com.qinxue.myapp.net.clients.gank.factorys;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
@@ -29,26 +28,15 @@ import retrofit2.CallAdapter;
 import retrofit2.Retrofit;
 
 public class LiveDataCallAdapterFactory extends CallAdapter.Factory {
-    private static final String TAG = "qinxueFactory";
+    private static final String TAG = "LiveDataCallAdapterFactory";
 
     @Override
     public CallAdapter<?, ?> get(@NonNull Type returnType, @NonNull Annotation[] annotations, @NonNull Retrofit retrofit) {
-        Log.i(TAG, "returnType = " + returnType);
-        if (getRawType(returnType) != LiveData.class) {
+        if (getRawType(returnType) != LiveData.class) { //获取实际type
             return null;
         }
-        Type observableType = getParameterUpperBound(0, (ParameterizedType) returnType);
-        Log.i(TAG, "observableType = " + observableType);
-        Class<?> rawObservableType = getRawType(observableType);
-        Log.i(TAG, "rawObservableType = " + rawObservableType);
-        if (rawObservableType != ApiResponse.class) {
-            throw new IllegalArgumentException("type must be a resource");
-        }
-        if (!(observableType instanceof ParameterizedType)) {
-            throw new IllegalArgumentException("resource must be parameterized");
-        }
-        Type bodyType = getParameterUpperBound(0, (ParameterizedType) observableType);
-        Log.i(TAG, "bodyType = " + bodyType);
-        return new LiveDataCallAdapter<>(bodyType);
+        Type observableType = getParameterUpperBound(0, (ParameterizedType) returnType); //获取参数type
+        Type realReturnType = new GankResultType(observableType);
+        return new LiveDataCallAdapter<>(realReturnType);
     }
 }

@@ -5,7 +5,6 @@ import android.arch.lifecycle.LiveData;
 
 import com.qinxue.myapp.model.GankResult;
 import com.qinxue.myapp.model.XDCategoryItemInfo;
-import com.qinxue.myapp.net.clients.gank.factorys.ApiResponse;
 
 import java.util.List;
 
@@ -19,5 +18,5 @@ public interface GankService {
     LiveData<ResponseBody> getToday();
 
     @GET("xiandu/categories")
-    LiveData<ApiResponse<GankResult<List<XDCategoryItemInfo>>>> getXDCategorys();
+    LiveData<List<XDCategoryItemInfo>> getXDCategorys();
 }
